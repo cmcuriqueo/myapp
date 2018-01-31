@@ -1,12 +1,36 @@
-<%= form_for(@user, html: { class: :form }) do |form| %>
-  <p>
-    <%= form.label :name %><br>
-    <%= form.text_field :name, class: 'form-control' %>
-  <p>
-    <%= form.label :email %><br>
-    <%= form.text_field :email, class: 'form-control' %>
-  </p>
-  <p>
-    <%= form.submit :class => 'btn btn-primary' %>
-  </p>
-<% end %>
+<% provide(:title, 'Sign up') %>
+<div class="col-md-6 col-md-offset-3">
+	<h1 class="text-center">Sign up</h1>
+</div>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@user, url: signup_path, html: { class: :form }) do |f| %>
+	  <% if @user.errors.any? %>
+	    <div id="error_explanation">
+	      <div class="alert alert-danger">
+	        The form contains <%= pluralize(@user.errors.count, "error") %>.
+	      </div>
+	      <ul>
+	      <% @user.errors.full_messages.each do |msg| %>
+	        <li><%= msg %></li>
+	      <% end %>
+	      </ul>
+	    </div>
+	  <% end %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name, :class => 'form-control' %>
+
+      <%= f.label :email %>
+      <%= f.email_field :email, :class => 'form-control' %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password, :class => 'form-control' %>
+
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmation, :class => 'form-control' %>
+
+      <%= f.submit "Create my account", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
